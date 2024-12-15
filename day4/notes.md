@@ -28,4 +28,6 @@ So, if there was an `A` at the indexes of `[1, 1]`, we would check `[0, 0]`, `[2
 ## Reflection
 I liked the first part a lot, not so much the second, but it was still fun!
 
-I learned a lot about manipulating arrays to get what I want, and in this case it was a set of indexes I needed to check for words. I am starting to think maybe for things like the input data and word I should reference the global variable rather than passing it to all of my functions. I feel like it clutters up my functions quite a bit, and it doesn't serve a good enough purpose for me to keep it.
+I learned a lot about manipulating arrays to get what I want, and in this case it was a set of indexes I needed to check for words. 
+
+I am starting to think maybe for things like the input data and word I should reference the global variable rather than passing it to all of my functions. I feel like it clutters up my functions quite a bit, and it doesn't serve a good enough purpose for me to keep it.
