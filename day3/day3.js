@@ -1,4 +1,4 @@
-import {readLinesFromFile} from "../utils/file-reader.mjs";
+import {readLinesFromFile} from "../utils/file-reader.js";
 import {resolve, dirname} from "path";
 import {fileURLToPath} from "url";
 
