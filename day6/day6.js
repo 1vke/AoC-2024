@@ -41,9 +41,9 @@ const simulateGuard = (pseudoObstacle) => {
         const nextXIndex = xIndex + dx;
         const nextYIndex = yIndex + dy;
 
-        // Check out-of-bounds early
+        // Check out-of-bounds
         if (nextXIndex < 0 || nextXIndex >= grid[0].length || nextYIndex < 0 || nextYIndex >= grid.length) {
-            break; // Terminate if out of bounds
+            break; // Stop if out of bounds
         }
 
         // Check for existing obstacles
