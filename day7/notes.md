@@ -27,4 +27,21 @@ Answer: `538191549061`
 First try!
 
 #### Part 2:
+I didn't write any notes before solving this part, but something to jot down would be my solution for combining numbers: `17 || 18 --> 1718`.
+
+Originally, I was doing this via string concatenation, so I would put X and Y next to each other in a string, then parse that string as an integer. 
+
+I decided that this time I wanted to go away from strings to make the solution a little faster, and I found out that you can do what I was trying to achieve very easily with some math.
+
+If X was `17` and Y was `18`, you would multiply X by 10 to the power of the amount of digits from Y. So, in this case, it would yield `1700`. Simply add Y to our new X value, and you got `1718`. Getting the number of digits mathematically was the hard part for me, I ended up finding an answer on stack overflow that worked pretty well.
+---
+Answer: `34612812972206`
+
+Second try! Just had to change how I was dealing with the new operator a small amount. Still got it very quickly.
+
 ## Reflection
+MOVE. AWAY. FROM. STRINGS.
+
+I feel like I keep saying this, but I am still using strings. They make my solutions pretty slow sometimes (in most cases, only the second solution). Nothing that can't be fixed!
+
+Other than that, this day was pretty cool because I had done something very similar a couple years ago, so it was a pretty good refresher.

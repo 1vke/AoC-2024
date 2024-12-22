@@ -5,7 +5,7 @@ import {fileURLToPath} from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const inputFilePath = resolve(__dirname, "input.txt");
 
-const operators = ["+", "*"];
+const operators = ["+", "*", "|"];
 const calibrationExs = [];
 
 const onLine = (line) => {
@@ -16,23 +16,22 @@ const onLine = (line) => {
     calibrationExs.push(calibrationEx);
 };
 
+// https://stackoverflow.com/a/28203456
+const numDigits = (x) => {
+    return (Math.log10((x ^ (x >> 31)) - (x >> 31)) | 0) + 1;
+};
+
 const evaluateExpression = (expression) => {
-    const tokens = expression.match(/(\d+|\+|\-|\*|\/)/g);
+    const tokens = expression.match(/(\d+|\+|\*|\|)/g);
     let result = parseFloat(tokens[0]);
 
     for (let i = 1; i < tokens.length; i += 2) {
         const operator = tokens[i];
         const nextNumber = parseFloat(tokens[i + 1]);
 
-        // Apply the operator
-        switch (operator) {
-            case "+":
-                result += nextNumber;
-                break;
-            case "*":
-                result *= nextNumber;
-                break;
-        }
+        if (operator == "+") result += nextNumber;
+        else if (operator == "*") result *= nextNumber;
+        else if (operator == "|") result = result * 10 ** numDigits(nextNumber) + nextNumber;
     }
 
     return result;
@@ -45,8 +44,8 @@ const logSumOfSolvableExs = () => {
             let possibleEx = ex;
 
             const operatorIndexes = i
-                .toString(2)
-                .padStart(operatorAmount, "0")
+                .toString(operators.length) // convert possibility index to base 2 from base 10
+                .padStart(operatorAmount, "0") // convert possibility index to base 2 from base 10
                 .split("")
                 .map((str) => +str);
 
