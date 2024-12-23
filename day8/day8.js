@@ -6,6 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const inputFilePath = resolve(__dirname, "input.txt");
 
 let xBound;
+let yBound = 0;
 const antennaCoords = [];
 
 const onLine = (line, yIndex) => {
@@ -15,23 +16,8 @@ const onLine = (line, yIndex) => {
     });
 };
 
-const main = () => {
+const logAntinodeCount = (addAntinodeCallback) => {
     const antinodes = [];
-
-    const addAntinode = ([x, y]) => {
-        // if not inbounds, return
-        if (x >= xBound || x < 0 || y >= lineIndex || y < 0) {
-            // console.log([x, y], "OOB");
-            return;
-        }
-        // if not unique, return
-        if (antinodes.some((antinode) => antinode.x === x && antinode.y === y)) {
-            // console.log([x, y], "not unique");
-            return;
-        }
-        antinodes.push({x: x, y: y});
-        // console.log([x, y], "pushed");
-    };
 
     antennaCoords.slice(0, -1).forEach((firstAntenna, index) => {
         antennaCoords.slice(index + 1).forEach((secondAntenna) => {
@@ -39,17 +25,8 @@ const main = () => {
                 const dx = secondAntenna.x - firstAntenna.x;
                 const dy = secondAntenna.y - firstAntenna.y;
 
-                const possibleAntinodes = [
-                    [firstAntenna.x - dx, firstAntenna.y - dy],
-                    [secondAntenna.x + dx, secondAntenna.y + dy],
-                ];
-
-                // console.log(
-                //     `\nAntinodes of ${firstAntenna.x},${firstAntenna.y} && ${secondAntenna.x},${secondAntenna.y}:`,
-                //     possibleAntinodes
-                // );
-
-                for (const antinode of possibleAntinodes) addAntinode(antinode);
+                addAntinodeCallback(antinodes, [firstAntenna.x, firstAntenna.y], dx, dy, true);
+                addAntinodeCallback(antinodes, [secondAntenna.x, secondAntenna.y], dx, dy, false);
             }
         });
     });
@@ -57,12 +34,39 @@ const main = () => {
     console.log("Unique antinode count:", antinodes.length);
 };
 
-let lineIndex = 0;
+const main = () => {
+    const partOneAddAntinode = (antinodes, [x, y], dx, dy, negative) => {
+        x = negative ? x - dx : x + dx;
+        y = negative ? y - dy : y + dy;
+
+        if (x >= xBound || x < 0 || y >= yBound || y < 0) return; // if not inbounds, return
+        if (antinodes.some((antinode) => antinode.x === x && antinode.y === y)) return; // if not unique, return
+
+        antinodes.push({x: x, y: y});
+    };
+
+    const partTwoAddAntinode = (antinodes, [x, y], dx, dy, negative) => {
+        // if not inbounds, return
+        if (x >= xBound || x < 0 || y >= yBound || y < 0) return;
+
+        // if not unique, don't add antinode
+        if (!antinodes.some((antinode) => antinode.x === x && antinode.y === y)) antinodes.push({x: x, y: y});
+
+        const newX = negative ? x - dx : x + dx;
+        const newY = negative ? y - dy : y + dy;
+
+        partTwoAddAntinode(antinodes, [newX, newY], dx, dy, negative);
+    };
+
+    logAntinodeCount(partOneAddAntinode);
+    logAntinodeCount(partTwoAddAntinode);
+};
+
 readLinesFromFile(
     inputFilePath,
     (line) => {
-        onLine(line, lineIndex);
-        lineIndex += 1;
+        onLine(line, yBound);
+        yBound += 1;
     },
     () => main()
 );

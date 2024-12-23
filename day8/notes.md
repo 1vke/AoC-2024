@@ -30,4 +30,20 @@ I made a mistake calculating the second antinode and a mistake in my logic for c
 
 #### Part 2:
 
+This time around, its not only the position before and after the two inline antennas, they want every position possible.
+
+---
+
+Answer: `884`
+
+I didn't write much notes for this because I found it to be pretty easy.
+
+Only issues I faced were logic issues, I didn't read carefully enough that the distance didn't matter, meaning that antinodes existed at the antennas as well.
+
 ## Reflection
+
+I almost pushed some code that would only run the part two solution, but I decided to refactor my code a bit so that both solutions would print.
+
+This code is fast! I listened to myself finally and tried to solve this challenge without string operations.
+
+I don't think I could give myself anything to go over this time around, besides data structures. Which is good!
